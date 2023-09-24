@@ -2,7 +2,7 @@ import { createSignal, type Component, useContext } from "solid-js";
 import { JsonExplorer } from "./components/JsonExplorer";
 import { JsonExplorerContext } from "./context";
 
-export type JsonObjectType = { [x: string]: JsonValue };
+export type JsonObjectType = { [key: string]: JsonValue };
 
 export type JsonValue =
   | string
