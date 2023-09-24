@@ -15,13 +15,13 @@ export const JsonReferenceType: Component<JsonElementProps> = (props) => {
     value: JSON.stringify(props.property.value),
   };
 
-  function isArr(elem: JsonProperty): elem is JsonProperty<JsonValue[]> {
-    return Array.isArray(elem);
-  }
+  const isArrayPropery = (
+    property: JsonProperty
+  ): property is JsonProperty<JsonValue[]> => Array.isArray(property.value);
 
   return (
     <div>
-      {isArr(props.property) && (
+      {isArrayPropery(props.property) && (
         <>
           <JsonArray
             property={props.property}
