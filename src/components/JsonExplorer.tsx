@@ -1,10 +1,11 @@
 import { Component } from "solid-js";
-import { JsonValue } from "../App";
 import { JsonReferenceType } from "./JsonReferenceType";
+import { JsonValue } from "../types";
 
 type JsonExplorerProps = {
   rootNode: JsonValue;
 };
+
 export const indentation = "  ";
 
 export const JsonExplorer: Component<JsonExplorerProps> = (props) => {

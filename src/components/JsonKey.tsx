@@ -1,6 +1,6 @@
 import { Component, useContext } from "solid-js";
-import { JsonProperty } from "../App";
 import { JsonExplorerContext } from "../context";
+import { JsonProperty } from "../types";
 
 type KeyValueProps = {
   key: string;

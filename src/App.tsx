@@ -1,20 +1,7 @@
 import { createSignal, type Component, useContext } from "solid-js";
 import { JsonExplorer } from "./components/JsonExplorer";
 import { JsonExplorerContext } from "./context";
-
-export type JsonObjectType = { [key: string]: JsonValue };
-
-export type JsonValue =
-  | string
-  | number
-  | boolean
-  | JsonObjectType
-  | Array<JsonValue>;
-
-export type JsonProperty = {
-  path: string[];
-  value: JsonValue;
-};
+import { JsonValue } from "./types";
 
 const App: Component = () => {
   const [json, setJson] = createSignal<JsonValue>("");

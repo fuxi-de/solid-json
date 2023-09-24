@@ -1,8 +1,7 @@
 import { Component } from "solid-js";
-import { JsonProperty } from "../App";
 import { JsonKey } from "./JsonKey";
 import { indentation } from "./JsonExplorer";
-import { JsonElementProps } from "./JsonReferenceType";
+import { JsonElementProps, JsonProperty } from "../types";
 
 export const JsonPrimitive: Component<JsonElementProps> = (props) => {
   const currentIndentation = () =>

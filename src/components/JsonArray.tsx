@@ -2,9 +2,9 @@ import { Component, createEffect } from "solid-js";
 import { isPrimitiveJsonValue } from "../utils";
 import { JsonPrimitive } from "./JsonPrimitive";
 import { indentation } from "./JsonExplorer";
-import { JsonElementProps, JsonReferenceType } from "./JsonReferenceType";
-import { JsonProperty, JsonValue } from "../App";
+import { JsonReferenceType } from "./JsonReferenceType";
 import { JsonKey } from "./JsonKey";
+import { JsonElementProps, JsonProperty, JsonValue } from "../types";
 
 export const JsonArray: Component<JsonElementProps> = (props) => {
   const currentIndentation = () =>

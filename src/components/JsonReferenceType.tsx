@@ -3,12 +3,7 @@ import { JsonArray } from "./JsonArray";
 import { JsonObject } from "./JsonObject";
 import { indentation } from "./JsonExplorer";
 import { JsonKey } from "./JsonKey";
-import { JsonProperty } from "../App";
-
-export type JsonElementProps = {
-  shouldRenderKey: boolean;
-  property: JsonProperty;
-};
+import { JsonElementProps, JsonProperty } from "../types";
 
 export const JsonReferenceType: Component<JsonElementProps> = (props) => {
   //TODO calculate currentIndentation and currentJsonProperty here and pass the key component down
