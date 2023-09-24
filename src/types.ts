@@ -7,12 +7,12 @@ export type JsonValue =
   | JsonObjectType
   | Array<JsonValue>;
 
-export type JsonProperty = {
+export type JsonProperty<specific = JsonValue> = {
   path: string[];
-  value: JsonValue;
+  value: specific;
 };
 
-export type JsonElementProps = {
+export type JsonElementProps<specific = JsonValue> = {
   shouldRenderKey: boolean;
-  property: JsonProperty;
+  property: JsonProperty<specific>;
 };

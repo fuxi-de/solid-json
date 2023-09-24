@@ -3,7 +3,7 @@ import { JsonArray } from "./JsonArray";
 import { JsonObject } from "./JsonObject";
 import { indentation } from "./JsonExplorer";
 import { JsonKey } from "./JsonKey";
-import { JsonElementProps, JsonProperty } from "../types";
+import { JsonElementProps, JsonProperty, JsonValue } from "../types";
 
 export const JsonReferenceType: Component<JsonElementProps> = (props) => {
   //TODO calculate currentIndentation and currentJsonProperty here and pass the key component down
@@ -15,9 +15,13 @@ export const JsonReferenceType: Component<JsonElementProps> = (props) => {
     value: JSON.stringify(props.property.value),
   };
 
+  function isArr(elem: JsonProperty): elem is JsonProperty<JsonValue[]> {
+    return Array.isArray(elem);
+  }
+
   return (
     <div>
-      {Array.isArray(props.property.value) && (
+      {isArr(props.property) && (
         <>
           <JsonArray
             property={props.property}

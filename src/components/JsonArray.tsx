@@ -6,7 +6,7 @@ import { JsonReferenceType } from "./JsonReferenceType";
 import { JsonKey } from "./JsonKey";
 import { JsonElementProps, JsonProperty, JsonValue } from "../types";
 
-export const JsonArray: Component<JsonElementProps> = (props) => {
+export const JsonArray: Component<JsonElementProps<JsonValue[]>> = (props) => {
   const currentIndentation = () =>
     `${indentation.repeat(props.property.path.length)}`;
   createEffect(() => console.log("array", props.property.value));
@@ -29,25 +29,23 @@ export const JsonArray: Component<JsonElementProps> = (props) => {
           {"["}
         </>
       )}
-      {(props.property.value as JsonValue[]).map(
-        (value: any, index: number) => {
-          const nestedScope = [...props.property.path, `[${index}]`];
-          if (isPrimitiveJsonValue(value)) {
-            return (
-              <JsonPrimitive
-                property={{ path: nestedScope, value }}
-                shouldRenderKey={false}
-              />
-            );
-          }
+      {props.property.value.map((value: any, index: number) => {
+        const nestedScope = [...props.property.path, `[${index}]`];
+        if (isPrimitiveJsonValue(value)) {
           return (
-            <JsonReferenceType
+            <JsonPrimitive
               property={{ path: nestedScope, value }}
               shouldRenderKey={false}
             />
           );
         }
-      )}
+        return (
+          <JsonReferenceType
+            property={{ path: nestedScope, value }}
+            shouldRenderKey={false}
+          />
+        );
+      })}
       {<span>{`${currentIndentation()}],`}</span>}
     </>
   );
