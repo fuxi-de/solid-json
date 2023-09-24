@@ -1,47 +1,55 @@
-import { Component, createEffect } from "solid-js";
-import { JsonObjectType, JsonProperty } from "../App";
+import { Component } from "solid-js";
+import { JsonProperty } from "../App";
 import { indentation } from "./JsonExplorer";
 import { isPrimitiveJsonValue } from "../utils";
 import { JsonPrimitive } from "./JsonPrimitive";
-import { JsonReferenceType } from "./JsonReferenceType";
+import { JsonElementProps, JsonReferenceType } from "./JsonReferenceType";
 import { JsonKey } from "./JsonKey";
 
-type ObjectProps = {
-  key?: string;
-  value: JsonObjectType;
-  path: string[];
-};
-
-export const JsonObject: Component<ObjectProps> = (props) => {
-  const currentIndentation = () => `${indentation.repeat(props.path.length)}`;
+export const JsonObject: Component<JsonElementProps> = (props) => {
+  const currentIndentation = () =>
+    `${indentation.repeat(props.property.path.length)}`;
 
   const currentJsonProperty: JsonProperty = {
-    path: props.path,
-    value: JSON.stringify(props.value),
+    path: props.property.path,
+    value: JSON.stringify(props.property.value),
   };
   return (
     <>
-      {!props.key && (
+      {!props.shouldRenderKey && (
         <span>
           {currentIndentation()}
           {"{"}
         </span>
       )}
 
-      {props.key && (
+      {props.shouldRenderKey && (
         <>
           {currentIndentation()}
-          <JsonKey property={currentJsonProperty} key={props.key} />
+          <JsonKey
+            property={currentJsonProperty}
+            key={props.property.path[props.property.path.length - 1]}
+          />
           {"{"}
         </>
       )}
 
-      {Object.entries(props.value).map(([key, value], index: number) => {
-        const nestedScope = [...props.path, key];
+      {Object.entries(props.property.value).map(([key, value]) => {
+        const nestedScope = [...props.property.path, key];
         if (isPrimitiveJsonValue(value)) {
-          return <JsonPrimitive key={key} value={value} path={nestedScope} />;
+          return (
+            <JsonPrimitive
+              shouldRenderKey={true}
+              property={{ path: nestedScope, value }}
+            />
+          );
         }
-        return <JsonReferenceType key={key} value={value} path={nestedScope} />;
+        return (
+          <JsonReferenceType
+            shouldRenderKey={true}
+            property={{ path: nestedScope, value }}
+          />
+        );
       })}
 
       {<span>{`${currentIndentation()}},`}</span>}

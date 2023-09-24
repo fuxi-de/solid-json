@@ -2,6 +2,8 @@
 
 Simple SPA written in [Solid](https://solidjs.com) that allows to fetch JSON from a remote ressource. Will render it correctly indented and let you explore it in the sense of returning the `value` and `path` of a given property when clicking on its key.
 
+Test it by pasting a URL that returns valid JSON into the respective input on the left side.
+
 ## Commands
 
 install dependencies:

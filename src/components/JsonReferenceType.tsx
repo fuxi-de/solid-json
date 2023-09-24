@@ -5,37 +5,38 @@ import { indentation } from "./JsonExplorer";
 import { JsonKey } from "./JsonKey";
 import { JsonProperty } from "../App";
 
-type ObjectProps = {
-  key?: string;
-  value: any;
-  path: string[];
-  isArray?: boolean;
+export type JsonElementProps = {
+  shouldRenderKey: boolean;
+  property: JsonProperty;
 };
 
-export const JsonReferenceType: Component<ObjectProps> = (props) => {
+export const JsonReferenceType: Component<JsonElementProps> = (props) => {
   //TODO calculate currentIndentation and currentJsonProperty here and pass the key component down
-  const currentIndentation = () => `${indentation.repeat(props.path.length)}`;
+  const currentIndentation = () =>
+    `${indentation.repeat(props.property.path.length)}`;
 
   const currentJsonProperty: JsonProperty = {
-    path: props.path,
-    value: JSON.stringify(props.value),
+    path: props.property.path,
+    value: JSON.stringify(props.property.value),
   };
 
   return (
     <div>
-      {Array.isArray(props.value) && (
+      {Array.isArray(props.property.value) && (
         <>
-          <JsonArray value={props.value} path={props.path} />
+          <JsonArray
+            property={props.property}
+            shouldRenderKey={props.shouldRenderKey}
+          />
         </>
       )}
-      {typeof props.value === "object" &&
-        !Array.isArray(props.value) &&
-        props.value !== null && (
+      {typeof props.property.value === "object" &&
+        !Array.isArray(props.property.value) &&
+        props.property.value !== null && (
           <>
             <JsonObject
-              key={props.path.length || !props.isArray ? props?.key : undefined}
-              value={props.value}
-              path={props.path}
+              shouldRenderKey={props.shouldRenderKey}
+              property={props.property}
             />
           </>
         )}

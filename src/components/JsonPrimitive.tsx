@@ -2,31 +2,30 @@ import { Component } from "solid-js";
 import { JsonProperty } from "../App";
 import { JsonKey } from "./JsonKey";
 import { indentation } from "./JsonExplorer";
+import { JsonElementProps } from "./JsonReferenceType";
 
-type PrimitiveProps = {
-  key?: string;
-  value: any;
-  path: string[];
-};
-
-export const JsonPrimitive: Component<PrimitiveProps> = (props) => {
-  const currentIndentation = () => `${indentation.repeat(props.path.length)}`;
+export const JsonPrimitive: Component<JsonElementProps> = (props) => {
+  const currentIndentation = () =>
+    `${indentation.repeat(props.property.path.length)}`;
 
   const jsonProperty: JsonProperty = {
-    path: props.path,
-    value: props.value,
+    path: props.property.path,
+    value: props.property.value,
   };
 
   return (
     <div>
-      {props.key && (
+      {props.shouldRenderKey && (
         <>
           {currentIndentation()}
-          <JsonKey property={jsonProperty} key={props.key} />
+          <JsonKey
+            property={jsonProperty}
+            key={jsonProperty.path[jsonProperty.path.length - 1]}
+          />
         </>
       )}
 
-      <span>{JSON.stringify(props.value)},</span>
+      <span>{JSON.stringify(props.property.value)},</span>
     </div>
   );
 };

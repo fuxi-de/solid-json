@@ -21,7 +21,7 @@ const App: Component = () => {
   const { property } = useContext(JsonExplorerContext);
   const handleInput = () => {
     //todo make dynamic
-    fetch("https://jsonplaceholder.typicode.com/users/1")
+    fetch("https://jsonplaceholder.typicode.com/users")
       .then((response) => response.json())
       .then((json) => {
         console.log("fetched json: ", json);
@@ -54,7 +54,7 @@ const App: Component = () => {
                     class="outline-2 outline-zinc-700 border rounded-lg p-3 xborder-zinc-700 placeholder-zinc-600 text-zinc-800"
                     type="text"
                     placeholder="Path"
-                    value={property().path}
+                    value={property().path.join(".")}
                   ></input>
                   <span class="block mt-2 pl-2 text-sm font-medium text-slate-700">
                     selected Path from JSON
@@ -75,7 +75,7 @@ const App: Component = () => {
             </div>
           </aside>
           <main role="main" class="w-2/3">
-            <JsonExplorer input={json()} />
+            <JsonExplorer rootNode={json()} />
           </main>
         </div>
       </div>
