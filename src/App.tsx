@@ -1,14 +1,20 @@
-import { createSignal, type Component, useContext } from "solid-js";
+import { createSignal, type Component, useContext, onMount } from "solid-js";
 import { JsonExplorer } from "./components/JsonExplorer";
 import { JsonExplorerContext } from "./context";
 import { JsonValue } from "./types";
 
 const App: Component = () => {
+  const [url, setUrl] = createSignal(
+    " https://jsonplaceholder.typicode.com/users"
+  );
   const [json, setJson] = createSignal<JsonValue>("");
   const { property } = useContext(JsonExplorerContext);
-  const handleInput = () => {
-    //todo make dynamic
-    fetch("https://jsonplaceholder.typicode.com/users")
+  onMount(() => {
+    fetchJson(url());
+  });
+
+  const fetchJson = (url: string) => {
+    fetch(url)
       .then((response) => response.json())
       .then((json) => {
         console.log("fetched json: ", json);
@@ -28,8 +34,10 @@ const App: Component = () => {
                     class="outline-2 outline-zinc-700 border rounded-lg p-3 xborder-zinc-700 placeholder-zinc-600 text-zinc-800 w-full"
                     type="text"
                     placeholder="API Url"
-                    onChange={() => {
-                      handleInput();
+                    value={url()}
+                    onChange={(e) => {
+                      setUrl(e.target.value);
+                      fetchJson(e.target.value);
                     }}
                   ></input>
                   <span class="block mt-2 pl-2 text-sm font-medium text-slate-700">
